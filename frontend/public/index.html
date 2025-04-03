@@ -1,29 +1,71 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-AR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interfaz de Búsqueda</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="description" content="Consulta legal gratuita en Argentina. Búsqueda de leyes, códigos, normativas y jurisprudencia actualizada. Información legal confiable.">
+    <meta name="keywords" content="consulta legal, leyes argentina, normativas, jurisprudencia, códigos legales, derecho argentino, asesoría legal">
+    <meta name="author" content="Consulta Legal Argentina">
+    <meta name="robots" content="index, follow">
+    
+    <title>Consulta Legal Argentina | Búsqueda de Leyes y Normativas</title>
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Consulta Legal Argentina">
+    <meta property="og:description" content="Búsqueda de leyes y normativas argentinas actualizadas">
+    <meta property="og:url" content="https://consultalegalargentina.com/">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Consulta Legal Argentina">
+    <meta name="twitter:description" content="Búsqueda de leyes y normativas argentinas actualizadas">
+    
+    <link rel="canonical" href="https://consultalegalargentina.com/">
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Schema.org markup para búsqueda legal -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "LegalService",
+        "name": "Consulta Legal Argentina",
+        "description": "Servicio de búsqueda de legislación argentina",
+        "url": "https://consultalegalargentina.com",
+        "areaServed": {
+            "@type": "Country",
+            "name": "Argentina"
+        }
+    }
+    </script>
 </head>
 <body>
-    
-    <div class="search-container" id="searchContainer">
-        <h1 class="search-title">Buscar en nuestro sitio</h1>
-        <div class="search-box">
-            <input type="text" id="search-input" placeholder="Escribe lo que buscas...">
-            <button id="search-button">Buscar</button>
+    <div class="background"></div>
+    <main class="container">
+        <h1>Consulta Legal Argentina</h1>
+        
+        <div class="search-container" role="search">
+            <input 
+                type="search" 
+                id="searchInput" 
+                placeholder="Buscar leyes, códigos, normativas..."
+                aria-label="Búsqueda de legislación"
+                autocomplete="off"
+            >
+            <button 
+                id="searchButton" 
+                aria-label="Realizar búsqueda"
+                type="submit"
+            >Buscar</button>
         </div>
-        <div class="suggestions" id="suggestions-container">
-            <!-- Las sugerencias aparecerán aquí -->
+
+        <!-- Texto oculto para SEO -->
+        <div class="seo-text">
+            <h2>Búsqueda Legal en Argentina</h2>
+            <p>Sistema de consulta de leyes, códigos, normativas y jurisprudencia argentina actualizada. Acceso a información legal confiable y vigente.</p>
         </div>
-    </div>
+    </main>
 
-    <div class="search-results" id="searchResults">
-        <!-- Los resultados de búsqueda aparecerán aquí -->
-    </div>
-
-    <script src="js.js">
-    </script>
+    <script src="script.js"></script>
 </body>
-</html>
+</html> 
