@@ -22,7 +22,7 @@
     <meta name="twitter:description" content="Búsqueda de leyes y normativas argentinas actualizadas">
     
     <link rel="canonical" href="https://consultalegalargentina.com/">
-    <link rel="stylesheet" href="../src/css/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     
     <!-- Schema.org markup para búsqueda legal -->
     <script type="application/ld+json">
@@ -44,10 +44,11 @@
     <main class="container">
         <h1>Consulta Legal Argentina</h1>
         
-        <div class="search-container" role="search">
+        <form method="POST" class="search-container" role="search">
             <input 
                 type="search" 
-                id="searchInput" 
+                id="searchInput"
+                name="consulta" 
                 placeholder="Buscar leyes, códigos, normativas..."
                 aria-label="Búsqueda de legislación"
                 autocomplete="off"
@@ -57,7 +58,15 @@
                 aria-label="Realizar búsqueda"
                 type="submit"
             >Buscar</button>
-        </div>
+
+            <!-- Resultado de la búsqueda con la respuesta del servidor -->
+            <div class="request" id="result">
+                {% if respuesta %}
+                    <h2>Respuesta:</h2>
+                    <p>{{ respuesta }}</p>
+                {% endif %}
+            </div>
+        </form>
 
         <!-- Texto oculto para SEO -->
         <div class="seo-text">
@@ -66,7 +75,7 @@
         </div>
     </main>
 
-    <script src="../src/js/js.js"></script>
+    <script src="{{ url_for('static', filename='js/js.js') }}"></script>
 </body>
 </html> 
 
