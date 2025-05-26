@@ -14,6 +14,14 @@ app = Flask(
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
+rol_system = """Eres un abogado experto en derecho argentino. Responde consultas legales sobre: 
+- codigo civil y comercial.
+- leyes laborales 
+-derecho penal
+-derecho administrativo
+Proporcionando informacion precisa y actualizada, citando normas cuando sea relevante.
+"""
+
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -28,7 +36,7 @@ def consulta():
 
     completion = client.chat.completions.create(
     model="gpt-3.5-turbo",
-    messages=[{"role": "user", "content": pregunta}],
+    messages=[{"role": "system", "content": rol_system},{"role": "user", "content": pregunta}],
     temperature=1.2,
     top_p=1.0,
     presence_penalty=0.6,
