@@ -1,8 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // 🧠 Elementos del DOM
-    const searchInput = document.getElementById('searchInput');
+    const form = document.getElementById("consultaForm");
+    const input = document.getElementById("searchInput");
+    const result = document.getElementById("result");
+    const button = document.getElementById("searchButton");
+    const searchContainer = document.querySelector('.search-container');
 
-    // 🌀 Lista de placeholders rotativos para el input
+
     const placeholders = [
         "Describe tu situación legal...",
         "Buscar leyes sobre contratos...",
@@ -12,68 +15,52 @@ document.addEventListener('DOMContentLoaded', function() {
     ];
 
     let currentPlaceholder = 0;
-
-    // 🔁 Cambia el placeholder cada 3 segundos
-    function rotatePlaceholder() {
-        searchInput.setAttribute('placeholder', placeholders[currentPlaceholder]);
+    setInterval(() => {
+        input.setAttribute('placeholder', placeholders[currentPlaceholder]);
         currentPlaceholder = (currentPlaceholder + 1) % placeholders.length;
-    }
+    }, 3000);
 
-    setInterval(rotatePlaceholder, 3000); // ⏱️ Intervalo para rotar
+    form.addEventListener("submit", function(e) {
+        e.preventDefault();
 
-    // ✅ Agrega clase para animación de entrada si usás CSS
-    document.body.classList.add('loaded');
+        const consulta = input.value.trim();
+        if (!consulta) return;
 
-    // 🎯 Pone el foco automáticamente en el campo al cargar la página
-    searchInput.focus();
+        // Desactiva el botón y muestra cargando
+        button.disabled = true;
+        button.textContent = "Consultando...";
+        result.innerHTML = ""; // Limpia resultado anterior
 
-    // 🦾 Accesibilidad: indicar que el campo está expandido cuando tiene foco
-    searchInput.addEventListener('focus', function() {
-        this.setAttribute('aria-expanded', 'true');
-    });
-
-    searchInput.addEventListener('blur', function() {
-        this.setAttribute('aria-expanded', 'false');
-    });
-
-    // 🚫 Comentado: esta función era para búsqueda falsa en el frontend,
-    // pero ahora Flask se encarga de manejar la lógica real con OpenAI.
-
-    /*
-    function handleSearch() {
-        const query = searchInput.value.trim();
-
-        if (query.length > 0) {
-            searchButton.disabled = true;
-            searchButton.textContent = 'Buscando...';
-
-            setTimeout(() => {
-                resultsContainer.style.display = 'block';
-                resultsContainer.innerHTML = `
-                    <h3>Resultados relacionados:</h3>
-                    <ul>
-                        <li>Artículo relacionado con: "${query}"</li>
-                        <li>Normativa vigente sobre el tema</li>
-                        <li>Jurisprudencia relacionada</li>
-                    </ul>
+        fetch("/api/consulta", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ consulta: consulta })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.respuesta) {
+                result.style.display = "block";
+                result.innerHTML = `
+                    <p>${data.respuesta}</p>
                 `;
+            } else {
+                result.innerHTML = "<p>Ocurrió un error.</p>";
+            }
+        })
+        
+        .catch(err => {
+            result.innerHTML = "<p>Error en la consulta.</p>";
+        })
+        .finally(() => {
+            button.disabled = false;
+            button.textContent = "Hacer otra consulta";
+        });
 
-                searchButton.disabled = false;
-                searchButton.textContent = 'Buscar';
-            }, 1000);
-        }
-    }
-
-    // ⛔ Esto estaba atado al click y enter, pero ya no lo necesitamos
-    searchButton.addEventListener('click', handleSearch);
-
-    searchInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            handleSearch();
-        }
+        searchInput.addEventListener('input', () => {
+            if (searchInput.value.trim() === "") {
+                result.style.display = "none";
+            }
+        });        
     });
-    */
-
-    // ⚠️ Si algún día querés hacer todo vía AJAX, podés volver a usar handleSearch()
 });
+

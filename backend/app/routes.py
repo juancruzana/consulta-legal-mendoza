@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, request, jsonify, render_template
 from dotenv import load_dotenv
 from openai import OpenAI
 import os
@@ -14,15 +14,27 @@ app = Flask(
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-@app.route("/", methods=["GET", "POST"])
+@app.route("/")
 def index():
-    respuesta = ""
-    if request.method == "POST":
-        consulta = request.form.get("consulta")
-        if consulta:
-            completion = client.chat.completions.create(
-                model="gpt-3.5-turbo",
-                messages=[{"role": "user", "content": consulta}]
-            )
-            respuesta = completion.choices[0].message.content
-    return render_template("index.html", respuesta=respuesta)
+    return render_template("index.html")
+
+@app.route("/api/consulta", methods=["POST"])
+def consulta():
+    data = request.get_json()
+    pregunta = data.get("consulta", "")
+
+    if not pregunta:
+        return jsonify({"error": "Consulta vacía"}), 400
+
+    completion = client.chat.completions.create(
+    model="gpt-3.5-turbo",
+    messages=[{"role": "user", "content": pregunta}],
+    temperature=1.2,
+    top_p=1.0,
+    presence_penalty=0.6,
+    frequency_penalty=0.3
+)
+
+    respuesta = completion.choices[0].message.content
+    return jsonify({"respuesta": respuesta})
+

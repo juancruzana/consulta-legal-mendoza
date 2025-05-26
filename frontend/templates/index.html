@@ -44,29 +44,21 @@
     <main class="container">
         <h1>Consulta Legal Argentina</h1>
         
-        <form method="POST" class="search-container" role="search">
+        <form id="consultaForm" class="search-container" role="search">
             <input 
                 type="search" 
-                id="searchInput"
-                name="consulta" 
+                id="searchInput" 
+                name="consulta"
                 placeholder="Buscar leyes, códigos, normativas..."
-                aria-label="Búsqueda de legislación"
+                required
                 autocomplete="off"
             >
-            <button 
-                id="searchButton" 
-                aria-label="Realizar búsqueda"
-                type="submit"
-            >Buscar</button>
+            <button id="searchButton" type="submit">Consultar</button>
 
-            <!-- Resultado de la búsqueda con la respuesta del servidor -->
-            <div class="request" id="result">
-                {% if respuesta %}
-                    <h2>Respuesta:</h2>
-                    <p>{{ respuesta }}</p>
-                {% endif %}
-            </div>
+             <!-- Respuesta que se va a llenar con JS -->
+            <div class="request" id="result"></div>
         </form>
+        
 
         <!-- Texto oculto para SEO -->
         <div class="seo-text">

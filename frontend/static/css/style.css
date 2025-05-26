@@ -55,7 +55,7 @@ body::before {
     background: url('https://upload.wikimedia.org/wikipedia/commons/1/16/Sun_of_May.svg') no-repeat center;
     background-size: contain;
     z-index: 1;
-    opacity: 0.1;  /* Más sutil */
+    opacity: 0.1;
     pointer-events: none;
 }
 
@@ -67,7 +67,7 @@ body::before {
     bottom: 0;
     background: linear-gradient(
         to bottom,
-        #1B3B6F 0%,       /* Azul más profesional */
+        #1B3B6F 0%,
         #1B3B6F 33%,
         #FFFFFF 33%,
         #FFFFFF 67%,
@@ -87,12 +87,12 @@ body::before {
 }
 
 h1 {
+    position: fixed;
     color: #FFFFFF;
     font-family: 'Cormorant Garamond', 'Times New Roman', serif;
     font-size: 58px;
     font-weight: 700;
-    position: fixed;
-    top: 10%;
+    top: 40px;
     left: 0;
     right: 0;
     text-align: center;
@@ -106,13 +106,13 @@ h1 {
 }
 
 .search-container {
+    position: fixed;
     background: #FFFFFF;
     width: 80%;
-    max-width: 500px;
+    max-width: 800px;
     padding: 35px;
     border-radius: 10px;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-    position: fixed;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
@@ -121,7 +121,18 @@ h1 {
     backface-visibility: hidden;
     -webkit-font-smoothing: antialiased;
     will-change: transform;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
+    max-height: 90vh;               /* Limita la altura a 90% de la pantalla */
+    overflow-y: auto;               /* Permite scroll si el contenido crece */
+    transition: max-height 0.4s ease; /* Transición suave si cambia altura */
+    margin: top 100px;
 }
+
 
 #searchInput {
     width: 100%;
@@ -146,12 +157,14 @@ h1 {
 }
 
 #searchButton {
-    width: 100%;
+    display: block;
+    margin: 0 auto;  
+    width: 50%;
     padding: 15px;
     background-color: #1B3B6F;
     color: #FFFFFF;
     border: none;
-    border-radius: 6px;
+    border-radius: 25px;
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
@@ -160,7 +173,6 @@ h1 {
     font-family: 'Source Sans Pro', Arial, sans-serif;
     /* Mejoras SEO */
     aria-label: "Realizar búsqueda";
-    role: "button";
 }
 
 #searchButton:hover {
@@ -170,6 +182,23 @@ h1 {
 #searchButton:active {
     transform: translateY(1px);
 }
+
+.request {
+    display: none;
+    width: 100%;
+    margin-top: 20px;
+    font-size: 16px;
+    color: #1B3B6F;
+    background-color: #f4f8ff;
+    border: 2px solid #1B3B6F;
+    padding: 20px;
+    border-radius: 2px;
+    animation: fadeIn 1.5s ease-in-out;
+    max-height: calc(100vh - 300px);  /* evita pasar el borde inferior */
+    overflow-y: auto;                 /* permite scroll si hay mucho texto */
+}
+
+
 
 .consulta-segura {
     color: #FFFFFF;
