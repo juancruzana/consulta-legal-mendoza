@@ -1,79 +1,61 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // 🧠 Elementos del DOM
     const searchInput = document.getElementById('searchInput');
-
-    // 🌀 Lista de placeholders rotativos para el input
+    const searchForm = document.querySelector('form');
+    const resultDiv = document.getElementById('result');
+    
+    // Placeholders rotativos
     const placeholders = [
-        "Describe tu situación legal...",
-        "Buscar leyes sobre contratos...",
-        "Consultar normativas vigentes...",
-        "Buscar legislación laboral...",
-        "Consultar derechos del consumidor..."
+        "Ej: ¿Cómo denunciar un despido injustificado?",
+        "Ej: Requisitos para un contrato de alquiler",
+        "Ej: Derechos del consumidor en compras online",
+        "Ej: ¿Qué hacer en un accidente de tránsito?",
+        "Ej: Proceso de divorcio de mutuo acuerdo"
     ];
-
+    
     let currentPlaceholder = 0;
-
-    // 🔁 Cambia el placeholder cada 3 segundos
+    
     function rotatePlaceholder() {
-        searchInput.setAttribute('placeholder', placeholders[currentPlaceholder]);
+        searchInput.placeholder = placeholders[currentPlaceholder];
         currentPlaceholder = (currentPlaceholder + 1) % placeholders.length;
     }
-
-    setInterval(rotatePlaceholder, 3000); // ⏱️ Intervalo para rotar
-
-    // ✅ Agrega clase para animación de entrada si usás CSS
-    document.body.classList.add('loaded');
-
-    // 🎯 Pone el foco automáticamente en el campo al cargar la página
-    searchInput.focus();
-
-    // 🦾 Accesibilidad: indicar que el campo está expandido cuando tiene foco
-    searchInput.addEventListener('focus', function() {
-        this.setAttribute('aria-expanded', 'true');
-    });
-
-    searchInput.addEventListener('blur', function() {
-        this.setAttribute('aria-expanded', 'false');
-    });
-
-    // 🚫 Comentado: esta función era para búsqueda falsa en el frontend,
-    // pero ahora Flask se encarga de manejar la lógica real con OpenAI.
-
-    /*
-    function handleSearch() {
+    
+    setInterval(rotatePlaceholder, 3000);
+    
+    // Manejo del formulario con AJAX
+    searchForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
         const query = searchInput.value.trim();
-
-        if (query.length > 0) {
-            searchButton.disabled = true;
-            searchButton.textContent = 'Buscando...';
-
-            setTimeout(() => {
-                resultsContainer.style.display = 'block';
-                resultsContainer.innerHTML = `
-                    <h3>Resultados relacionados:</h3>
-                    <ul>
-                        <li>Artículo relacionado con: "${query}"</li>
-                        <li>Normativa vigente sobre el tema</li>
-                        <li>Jurisprudencia relacionada</li>
-                    </ul>
+        if (!query) return;
+        
+        try {
+            // Mostrar estado de carga
+            resultDiv.innerHTML = '<div class="loading">Buscando información legal...</div>';
+            
+            const response = await fetch('/consulta', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ consulta: query })
+            });
+            
+            const data = await response.json();
+            
+            if (data.error) {
+                resultDiv.innerHTML = `<div class="error">Error: ${data.error}</div>`;
+            } else {
+                resultDiv.innerHTML = `
+                    <h2>Respuesta Legal</h2>
+                    <div class="respuesta">${data.respuesta.replace(/\n/g, '<br>')}</div>
                 `;
-
-                searchButton.disabled = false;
-                searchButton.textContent = 'Buscar';
-            }, 1000);
-        }
-    }
-
-    // ⛔ Esto estaba atado al click y enter, pero ya no lo necesitamos
-    searchButton.addEventListener('click', handleSearch);
-
-    searchInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            handleSearch();
+            }
+            
+        } catch (error) {
+            resultDiv.innerHTML = `<div class="error">Error al conectar con el servidor</div>`;
         }
     });
-    */
-
-    // ⚠️ Si algún día querés hacer todo vía AJAX, podés volver a usar handleSearch()
+    
+    // Foco inicial
+    searchInput.focus();
 });

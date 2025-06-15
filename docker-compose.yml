@@ -1,0 +1,13 @@
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+      - ./frontend/templates:/app/frontend/templates  # Montaje específico
+    environment:
+      - FLASK_APP=main.py
+      - FLASK_ENV=development
+    env_file:
+      - .env
