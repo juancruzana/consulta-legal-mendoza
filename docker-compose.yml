@@ -1,13 +1,50 @@
+version: '3.8'
+
 services:
   web:
-    build: .
+    build: 
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "5000:5000"
     volumes:
       - .:/app
-      - ./frontend/templates:/app/frontend/templates  # Montaje específico
+      - ./app/templates:/app/app/templates
+      - ./app/static:/app/app/static
     environment:
-      - FLASK_APP=main.py
+      - FLASK_APP=run.py
       - FLASK_ENV=development
+      - PYTHONPATH=/app
     env_file:
       - .env
+    depends_on:
+      - db
+    restart: unless-stopped
+    networks:
+      - app-network
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./db/init:/docker-entrypoint-initdb.d
+    restart: unless-stopped
+    networks:
+      - app-network
+    command: --default-authentication-plugin=mysql_native_password
+    env_file:
+      - .env
+
+volumes:
+  db_data:
+
+networks:
+  app-network:
+    driver: bridge
