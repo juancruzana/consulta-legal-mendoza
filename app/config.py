@@ -9,12 +9,15 @@ class Config:
     
     SECRET_KEY = os.environ.get("SECRET_KEY", "dev-key-change-in-production")
     
+    # Configuración de OpenAI
+    OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
+    
     # Configuración de la base de datos
-    MYSQL_USER = os.environ.get("MYSQL_USER", "root")
-    MYSQL_PASSWORD = os.environ.get("MYSQL_PASSWORD", "skatebor10")
-    MYSQL_HOST = os.environ.get("MYSQL_HOST", "localhost")
+    MYSQL_USER = os.environ.get("DB_USER", "appuser")
+    MYSQL_PASSWORD = os.environ.get("DB_PASSWORD", "1234")
+    MYSQL_HOST = os.environ.get("DB_HOST", "db")
     MYSQL_PORT = os.environ.get("DB_PORT","3306")
-    MYSQL_DB = os.environ.get("MYSQL_DB", "legal_assistent")
+    MYSQL_DB = os.environ.get("DB_NAME", "legal_assistent")
     
     # URI de conexión para SQLAlchemy (MySQL con PyMySQL)
     SQLALCHEMY_DATABASE_URI = (

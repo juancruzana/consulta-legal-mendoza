@@ -7,8 +7,8 @@ ai_bp = Blueprint('ai', __name__)
 def consulta_legal():
     legal_ai_client = LegalAiClient()
     data = request.get_json()
-    prompt = data.get("prompt", "")
+    prompt = data.get("consulta", "")
     if not prompt:
-        return jsonify({"error": "Falta el prompt"}), 400
+        return jsonify({"error": "Falta la consulta"}), 400
     respuesta = legal_ai_client.get_advice(prompt)
     return jsonify({"respuesta": respuesta})

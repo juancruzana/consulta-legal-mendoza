@@ -5,9 +5,11 @@ from app.ai.prompts import SYSTEM_PROMPT
 
 class LegalAiClient:
     def __init__(self):
-        self.client = openai.OpenAI(
-            api_key=current_app.config["OPENAI_API_KEY"]
-            )
+        api_key = current_app.config.get("OPENAI_API_KEY")
+        if not api_key:
+            raise ValueError("OPENAI_API_KEY no está configurada en las variables de entorno")
+        
+        self.client = openai.OpenAI(api_key=api_key)
     
     def get_advice(self, promt):
         messages = [

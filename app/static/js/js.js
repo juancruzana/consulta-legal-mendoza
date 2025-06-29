@@ -58,21 +58,4 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Foco inicial
     searchInput.focus();
-
-    // Modal Login
-    const loginBtn = document.getElementById('loginBtn');
-    const loginModal = document.getElementById('loginModal');
-    const closeLogin = document.getElementById('closeLogin');
-
-    loginBtn.addEventListener('click', function() {
-        loginModal.style.display = 'flex';
-    });
-    closeLogin.addEventListener('click', function() {
-        loginModal.style.display = 'none';
-    });
-    window.addEventListener('click', function(event) {
-        if (event.target === loginModal) {
-            loginModal.style.display = 'none';
-        }
-    });
 });

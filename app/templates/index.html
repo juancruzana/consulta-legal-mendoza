@@ -12,6 +12,9 @@
     <div class="background"></div>
     <nav class="navbar">
         <a href="{{ url_for('auth.login') }}" class="login-btn">Iniciar sesión</a>
+        {% if current_user.is_authenticated %}
+            <a href="{{ url_for('auth.logout') }}" class="logout-btn">Cerrar sesión</a>
+        {% endif %}
     </nav>
     <main class="container">
         <h1>Consulta Legal Argentina</h1>

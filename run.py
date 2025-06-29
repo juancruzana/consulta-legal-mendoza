@@ -1,6 +1,10 @@
 # run.py - ARCHIVO PRINCIPAL PARA EJECUTAR
 from app import create_app
 import os
+from dotenv import load_dotenv
+
+# Cargar variables de entorno desde .env
+load_dotenv()
 
 # Determinar el ambiente (desarrollo/producción)
 config_name = os.environ.get('FLASK_ENV', 'development')

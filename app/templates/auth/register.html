@@ -9,12 +9,12 @@
 <body>
     <main class="centered-form">
         <h2>Registro de Usuario</h2>
-        <form action="{{ url_for('auth.register') }}" method="post">
+        <form action="{{url_for('auth.register')}}" method="post">
             {{ form.hidden_tag() }}
             <div>
-                {{ form.username.label }}<br>
-                {{ form.username(size=32) }}
-                {% for error in form.username.errors %}
+                {{ form.name.label }}<br>
+                {{ form.name(size=32) }}
+                {% for error in form.name.errors %}
                     <span class="error">{{ error }}</span>
                 {% endfor %}
             </div>

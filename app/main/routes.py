@@ -1,5 +1,4 @@
-from flask import Blueprint, render_template
-from flask_login import login_required, current_user
+from flask import Blueprint, render_template, jsonify
 from app.auth.forms import LoginForm
 
 main_bp = Blueprint('main', __name__)
@@ -8,6 +7,11 @@ main_bp = Blueprint('main', __name__)
 def index():
     form = LoginForm()
     return render_template("index.html", form=form)
+
+@main_bp.route("/health", methods=["GET"])
+def health():
+    """Endpoint de healthcheck para Docker"""
+    return jsonify({"status": "healthy", "message": "Application is running"}), 200
 
 """" 
 @main_bp.route("/dashboard", methods=["GET"])
