@@ -58,4 +58,23 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Foco inicial
     searchInput.focus();
+
+    // Confirmación de cierre de sesión
+    const logoutLink = document.getElementById('logout-link');
+    const logoutModal = document.getElementById('logout-modal');
+    const confirmLogout = document.getElementById('confirm-logout');
+    const cancelLogout = document.getElementById('cancel-logout');
+
+    if (logoutLink && logoutModal && confirmLogout && cancelLogout) {
+        logoutLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            logoutModal.style.display = 'flex';
+        });
+        confirmLogout.addEventListener('click', function() {
+            window.location.href = logoutLink.href;
+        });
+        cancelLogout.addEventListener('click', function() {
+            logoutModal.style.display = 'none';
+        });
+    }
 });

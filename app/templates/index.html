@@ -11,9 +11,10 @@
 <body>
     <div class="background"></div>
     <nav class="navbar">
-        <a href="{{ url_for('auth.login') }}" class="login-btn">Iniciar sesión</a>
-        {% if current_user.is_authenticated %}
-            <a href="{{ url_for('auth.logout') }}" class="logout-btn">Cerrar sesión</a>
+        {% if not current_user.is_authenticated %}
+            <a href="{{ url_for('auth.login') }}" class="login-btn">Iniciar sesión</a>
+        {% else %}
+            <a href="{{ url_for('auth.logout') }}" class="login-btn" id="logout-link">Cerrar sesión</a>
         {% endif %}
     </nav>
     <main class="container">
@@ -44,7 +45,13 @@
             <p>Sistema de consulta de leyes, códigos, normativas y jurisprudencia argentina actualizada. Acceso a información legal confiable y vigente.</p>
         </div>
     </main>
-    <!-- Elimina o comenta el modal de login si ya no se usará -->
+    <div id="logout-modal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <p>¿Estás seguro que deseas cerrar la sesión?</p>
+            <button id="confirm-logout">Sí, cerrar sesión</button>
+            <button id="cancel-logout">Cancelar</button>
+        </div>
+    </div>
     <script src="{{url_for('static', filename='js/js.js') }}"></script>
 </body>
 </html>
