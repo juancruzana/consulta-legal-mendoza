@@ -77,4 +77,15 @@ document.addEventListener('DOMContentLoaded', function() {
             logoutModal.style.display = 'none';
         });
     }
+
+    // Ocultar mensajes flash automáticamente
+    setTimeout(function() {
+        document.querySelectorAll('.flash').forEach(function(flash) {
+            flash.style.transition = 'opacity 0.5s';
+            flash.style.opacity = '0';
+            setTimeout(function() {
+                flash.style.display = 'none';
+            }, 500);
+        });
+    }, 4000);
 });
