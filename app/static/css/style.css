@@ -47,6 +47,8 @@ body::before {
     top: 0; left: 0; right: 0; bottom: 0;
 }
 .background {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
     background: linear-gradient(
         to bottom,
         #1B3B6F 0%, #1B3B6F 33%,
@@ -57,50 +59,71 @@ body::before {
 }
 .container {
     z-index: 2;
+    position: relative;
 }
 
 h1 {
-    color: #FFF;
+    color: #1B3B6F;
     font-family: 'Cormorant Garamond', 'Times New Roman', serif;
-    font-size: 58px;
+    font-size: 3.2rem;
     font-weight: 700;
-    position: fixed;
-    top: 10%; left: 0; right: 0;
+    margin-top: 0;
+    margin-bottom: 32px;
     text-align: center;
     z-index: 3;
-    line-height: 1.3;
+    line-height: 1.2;
+    letter-spacing: 1px;
+    text-shadow: 0 4px 18px rgba(27,59,111,0.10), 0 1.5px 4px rgba(27,59,111,0.04);
+    animation: fadeInDown 1.2s cubic-bezier(.4,2,.3,1);
+    background: linear-gradient(90deg, #1B3B6F 60%, #3a7bd5 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .search-container {
-    background: #c7c1c1;
-    width: 80%; max-width: 500px;
-    padding: 35px;
-    border-radius: 10px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-    position: fixed;
-    left: 50%; top: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 3;
+    background: #fff;
+    width: 100%;
+    max-width: 520px;
+    padding: 38px 32px 32px 32px;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(27,59,111,0.13);
+    margin: 0 auto 18px auto;
     border: 1px solid #E5E5E5;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    animation: fadeInUp 1.2s 0.3s backwards;
+    position: static;
+    margin-top: 0;
 }
 
 #searchInput {
-    width: 100%;
-    padding: 15px 20px;
-    font-size: 16px;
-    border: 2px solid #D0D5DD;
-    border-radius: 6px;
-    margin-bottom: 20px;
-    color: #1B3B6F;
-    background: #FFF;
+    background: #fff;
+    border: none;
+    outline: none;
+    flex: 1;
+    padding: 16px 0;
+    font-size: 18px;
+    color: #222e3a;
     font-family: 'Source Sans Pro', Arial, sans-serif;
-    transition: all 0.3s ease;
+    font-weight: 400;
+    letter-spacing: 0.2px;
+    transition: background 0.2s, color 0.2s;
 }
 #searchInput:focus {
-    border-color: #1B3B6F;
-    outline: none;
-    box-shadow: 0 0 0 4px rgba(27, 59, 111, 0.1);
+    background: #f3f6fa;
+    color: #1B3B6F;
+    box-shadow: none;
 }
+#searchInput::placeholder {
+    color: #b0b8c1;
+    opacity: 1;
+    font-size: 17px;
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-weight: 400;
+}
+
 
 #searchButton {
     width: 100%;
@@ -148,9 +171,11 @@ h1 {
 }
 
 @media (max-width: 768px) {
-    h1 { font-size: 42px; }
-    .search-container { width: 90%; padding: 25px; }
+    h1 { margin-top: 24px; margin-bottom: 16px; }
+    .search-container { margin-top: 40px; }
+    .search-container { padding: 12px 4vw 18px 4vw; max-width: 98vw; }
     #searchInput, #searchButton { font-size: 15px; padding: 12px; }
+    .container { min-height: 50vh; }
 }
 
 @keyframes fadeIn {
@@ -335,4 +360,221 @@ h1 {
 }
 .modal-content button:hover {
     background: #152F59;
+}
+
+/* NAVBAR MODERNA */
+.glass-navbar {
+    background: rgba(255,255,255,0.85);
+    box-shadow: 0 4px 24px rgba(27,59,111,0.10);
+    border-bottom: 1.5px solid #e0e6ed;
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 32px 5px 32px;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 30;
+    min-height: 60px;
+    transition: box-shadow 0.3s;
+}
+.navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+        animation:  fadeIn 1s ease ;
+
+}
+.logo-icon {
+    font-size: 2rem;
+    margin-right: 6px;
+}
+.brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    color: #1B3B6F;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 8px rgba(27,59,111,0.07);
+}
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: fadeInUp 1.8s 0.3s backwards;
+
+}
+.login-btn {
+    background: linear-gradient(90deg, #1B3B6F 60%, #3a7bd5 100%);
+    color: #fff;
+    border: none;
+    padding: 10px 26px;
+    border-radius: 8px;
+    font-size: 17px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+    text-decoration: none;
+    display: inline-block;
+    box-shadow: 0 2px 8px rgba(27,59,111,0.10);
+    letter-spacing: 0.5px;
+}
+.login-btn:hover {
+    background: linear-gradient(90deg, #152F59 60%, #3a7bd5 100%);
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 6px 18px rgba(27,59,111,0.13);
+}
+
+/* CENTRADO Y LAYOUT MODERNO */
+body, html {
+    min-height: 100vh;
+    height: 100%;
+    width: 100vw;
+    overflow-x: hidden;
+    background: #f6f8fb;
+}
+.main-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    padding-top: 120px;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1.2rem;
+    padding: 0;
+}
+
+/* MENSAJE DE BIENVENIDA */
+.welcome-tip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #eaf1fb;
+    color: #1B3B6F;
+    border-radius: 8px;
+    padding: 14px 24px;
+    margin: 30px auto 18px auto;
+    max-width: 420px;
+    font-size: 1.1rem;
+    box-shadow: 0 2px 12px rgba(27,59,111,0.06);
+    gap: 10px;
+    z-index: 4;
+    position: relative;
+    animation: fadeIn 1.2s 0.2s backwards;
+}
+.tip-icon {
+    font-size: 1.4rem;
+}
+h1{
+    animation: fadeInUp 1.3s 0.3s backwards;
+
+}
+.search-container {
+    background: #fff;
+    width: 90%;
+    max-width: 520px;
+    padding: 32px 32px 32px 32px;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(27,59,111,0.13);
+    position: static;
+    margin: 30px auto 18px auto;
+    border: 1px solid #E5E5E5;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    animation: fadeInUp 1.2s 0.4s backwards;
+}
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.search-input-wrapper{
+    display: flex;
+    align-items: center;
+    background: #f3f6fa;
+    border-radius: 8px;
+    padding: 0 12px;
+    border: 1.5px solid #dbe5f1;
+    margin-bottom: 18px;
+}
+
+
+.search-icon {
+    font-size: 1.3rem;
+    color: #1B3B6F;
+    margin-right: 8px;
+}
+#searchInput {
+    background: transparent;
+    border: none;
+    outline: none;
+    flex: 1;
+    padding: 16px 0;
+    font-size: 17px;
+    color: #1B3B6F;
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+}
+#searchInput:focus {
+    background: #eaf1fb;
+    box-shadow: none;
+}
+#searchButton {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(90deg, #1B3B6F 60%, #3a7bd5 100%);
+    color: #FFF;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    transition: all 0.3s cubic-bezier(.4,2,.3,1);
+    box-shadow: 0 2px 8px rgba(27,59,111,0.10);
+}
+
+#searchButton:hover {
+    background: linear-gradient(90deg, #152F59 60%, #3a7bd5 100%);
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 6px 18px rgba(27,59,111,0.13);
+}
+
+#result {
+    animation: fadeIn 0.8s 0.5s backwards;
+}
+
+
+/* FOOTER MODERNO */
+.footer {
+    width: 100%;
+    background: rgba(27,59,111,0.92);
+    color: #fff;
+    text-align: center;
+    padding: 18px 0 12px 0;
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    z-index: 30;
+    box-shadow: 0 -2px 12px rgba(27,59,111,0.08);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .glass-navbar { padding: 8px 6px 0 6px; min-height: 48px; }
+    .brand { font-size: 1.1rem; }
+    .search-container { padding: 12px 4vw 18px 4vw; }
+    .welcome-tip { max-width: 98vw; font-size: 1rem; }
+    .footer { font-size: 0.95rem; padding: 12px 0 8px 0; }
+    .main-wrapper { margin-top: 60px; }
+    .container { min-height: 50vh; }
 }
