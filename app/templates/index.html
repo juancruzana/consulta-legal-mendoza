@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Consulta legal gratuita en Argentina. Búsqueda de leyes, códigos, normativas y jurisprudencia actualizada. Información legal confiable.">
+    <meta name="keywords" content="consulta legal, leyes argentina, normativas, jurisprudencia, códigos legales, derecho argentino, asesoría legal">
+    <title>Consulta Legal Argentina</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="background"></div>
+    <nav class="navbar glass-navbar">
+        <div class="navbar-left">
+            <span class="logo-icon">⚖️</span>
+            {% if current_user.is_authenticated %}
+                <span class="brand">Bienvenido, {{ current_user.name }}</span>
+            {% else %}
+                <span class="brand">Consulta Legal</span>
+            {% endif %}
+        </div>
+        <div class="navbar-right">
+        {% if not current_user.is_authenticated %}
+            <a href="{{ url_for('auth.login') }}" class="login-btn">Iniciar sesión</a>
+        {% else %}
+            <a href="{{ url_for('auth.logout') }}" class="login-btn" id="logout-link">Cerrar sesión</a>
+        {% endif %}
+        </div>
+    </nav>
+    <div class="main-wrapper">
+        <main class="container">
+            <h1 class="title">Consulta Legal Argentina</h1>
+            <form method="POST" class="search-container" role="search">
+                <div class="search-input-wrapper">
+                    <span class="search-icon">🔍</span>
+                    <input 
+                        type="search" 
+                        id="searchInput"
+                        name="consulta" 
+                        placeholder="Buscar leyes, códigos, normativas..."
+                        aria-label="Búsqueda de legislación"
+                        autocomplete="off"
+                    >
+                </div>
+                <button 
+                    id="searchButton" 
+                    aria-label="Realizar búsqueda"
+                    type="submit"
+                >Buscar</button>
+                <div class="request" id="result">
+                    {% if respuesta %}
+                        <h2>Respuesta:</h2>
+                        <p>{{ respuesta }}</p>
+                    {% endif %}
+                </div>
+            </form>
+        </main>
+    </div>
+    <div id="logout-modal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <p>¿Estás seguro que deseas cerrar la sesión?</p>
+            <button id="confirm-logout">Sí, cerrar sesión</button>
+            <button id="cancel-logout">Cancelar</button>
+        </div>
+    </div>
+    <footer class="footer">
+        <span>© 2024 Consulta Legal Mendoza. Todos los derechos reservados.</span>
+    </footer>
+    <script src="{{url_for('static', filename='js/js.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+Flask==2.3.3
+Flask-SQLAlchemy==3.0.5
+Flask-Login==0.6.2
+Flask-WTF==1.1.1
+WTForms==3.0.1
+PyMySQL==1.1.0
+python-dotenv==1.0.0
+openai==1.12.0
+httpx==0.27.0
+Werkzeug==2.3.7
+email-validator==2.1.0
+cryptography>=3.4.8
+requests==2.31.0
